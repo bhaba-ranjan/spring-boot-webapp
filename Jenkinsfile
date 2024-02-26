@@ -16,9 +16,8 @@ pipeline {
                 script {
 
                     sh 'echo ${BUILD_TIMESTAMP}'
-                    docker.build("bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}")
-//                     docker.image("bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}").push()
-                    
+                    sh 'docker build -t java .'
+
                 }
             }
         }
