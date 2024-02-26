@@ -15,7 +15,8 @@ pipeline {
             steps {
                 script {
                     sh 'echo ${BUILD_TIMESTAMP}'
-                    sh "docker login -u bpanigrahics -p ${DOCKER_HUB_PASS}"
+                    sh 'echo ${DOCKER_HUB_PASS}'
+                    sh "sudo docker login -u bpanigrahics -p ${DOCKER_HUB_PASS}"
                     def customImage = docker.build("bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}")
                 }
             }
