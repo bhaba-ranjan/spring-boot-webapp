@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-            DOCKER_CREDENTIALS = credentials("docker-hub-login")
+            DOCKER_CREDENTIALS = credentials("docker-secret")
     }
 
     stages {
@@ -16,7 +16,7 @@ pipeline {
                 script {
 
                     sh 'echo ${BUILD_TIMESTAMP}'
-                    sh 'docker login -u bpanigrahics -p dckr_pat_cB8FdukhCDoFF5jlID9XQPi8gSs'
+                    sh 'docker login -u bpanigrahics -p ${DOCKER_CREDENTIALS}'
 //                     sh 'docker build -t java .'
 
                 }
