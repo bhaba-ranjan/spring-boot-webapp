@@ -14,11 +14,11 @@ pipeline {
         stage('Building Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS){
-                        sh 'echo ${BUILD_TIMESTAMP}'
-                        docker.build("bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}")
-                        docker.image("bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}").push()
-                    }
+
+                    sh 'echo ${BUILD_TIMESTAMP}'
+                    docker.build("bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}")
+//                     docker.image("bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}").push()
+                    
                 }
             }
         }
