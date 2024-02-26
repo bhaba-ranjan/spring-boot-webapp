@@ -2,7 +2,7 @@ pipeline {
     agent any
 
    environment {
-        DOCKER_HUB_PASS = credentials("docker-hub-login")
+        DOCKER_CREDENTIALS = credentials("docker-hub-login")
    }
 
     stages {
@@ -14,21 +14,22 @@ pipeline {
         stage('Building Image') {
             steps {
                 script {
-                    sh 'echo ${BUILD_TIMESTAMP}'
-                    sh 'echo ${DOCKER_HUB_PASS}'
-                    sh "sudo docker login -u bpanigrahics -p ${DOCKER_HUB_PASS}"
-                    def customImage = docker.build("bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}")
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS){
+                        sh 'echo ${BUILD_TIMESTAMP}'
+                        docker.build("bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}")
+                        docker.image("bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}").push()
+                    }
                 }
             }
         }
 
-        stage('Pushing Image to Docker Hub'){
-            steps {
-                script {
-                    sh 'docker push bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}'
-                }
-            }
-        }
+//         stage('Pushing Image to Docker Hub'){
+//             steps {
+//                 script {
+//                     sh 'docker push bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}'
+//                 }
+//             }
+//         }
     }
 
     post {
