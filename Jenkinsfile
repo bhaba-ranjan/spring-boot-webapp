@@ -1,19 +1,31 @@
 pipeline {
     agent any
 
+   environment {
+        DOCKER_HUB_PASS = credentials("docker-hub-login")
+   }
+
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        stage('Build') {
+        stage('Building Image') {
             steps {
-                // Run Maven clean
-                sh 'mvn clean'
+                script {
+                    sh 'echo ${BUILD_TIMESTAMP}'
+                    sh "docker login -u bpanigrahics -p ${DOCKER_HUB_PASS}"
+                    def customImage = docker.build("bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}")
+                }
+            }
+        }
 
-                // Run Maven install
-                sh 'mvn install'
+        stage('Pushing Image to Docker Hub'){
+            steps {
+                script {
+                    sh 'docker push bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}'
+                }
             }
         }
     }
