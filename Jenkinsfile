@@ -16,7 +16,7 @@ pipeline {
                 script {
 
                     sh 'echo ${BUILD_TIMESTAMP}'
-                    sh 'docker login ${DOCKER_CREDENTIALS}'
+                    sh 'docker login -u bpanigrahics -p dckr_pat_cB8FdukhCDoFF5jlID9XQPi8gSs'
 //                     sh 'docker build -t java .'
 
                 }
