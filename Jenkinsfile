@@ -3,7 +3,7 @@ pipeline {
 
     environment {
             DOCKER_CREDENTIALS = credentials("docker-secret")
-            CURRENT_TIMESTAMP = '${BUILD_TIMESTAMP}'
+            CURRENT_TIMESTAMP = BUILD_TIMESTAMP
     }
 
     stages {
