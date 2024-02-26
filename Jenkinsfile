@@ -3,7 +3,6 @@ pipeline {
 
     environment {
             DOCKER_CREDENTIALS = credentials("docker-secret")
-            CURRENT_TIMESTAMP = BUILD_TIMESTAMP
     }
 
     stages {
@@ -15,22 +14,14 @@ pipeline {
         stage('Building Image') {
             steps {
                 script {
-
-                    sh 'echo ${CURRENT_TIMESTAMP}'
+                    sh 'echo ${BUILD_TIMESTAMP}'
                     sh 'docker login -u bpanigrahics -p ${DOCKER_CREDENTIALS}'
-//                     sh 'docker build -t java .'
-
+                    sh 'docker build -t bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP} .'
+                    sh 'docker push bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP}'
+                    sh 'docker image rm bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP} -f'
                 }
             }
         }
-
-//         stage('Pushing Image to Docker Hub'){
-//             steps {
-//                 script {
-//                     sh 'docker push bpanigrahics/webapp-spring-java:${BUILD_TIMESTAMP}'
-//                 }
-//             }
-//         }
     }
 
     post {
