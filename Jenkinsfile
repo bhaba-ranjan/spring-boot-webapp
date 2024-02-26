@@ -3,6 +3,7 @@ pipeline {
 
     environment {
             DOCKER_CREDENTIALS = credentials("docker-secret")
+            CURRENT_TIMESTAMP = '${BUILD_TIMESTAMP}'
     }
 
     stages {
@@ -15,7 +16,7 @@ pipeline {
             steps {
                 script {
 
-                    sh 'echo ${BUILD_TIMESTAMP}'
+                    sh 'echo ${CURRENT_TIMESTAMP}'
                     sh 'docker login -u bpanigrahics -p ${DOCKER_CREDENTIALS}'
 //                     sh 'docker build -t java .'
 
