@@ -24,7 +24,9 @@ pipeline {
                     sh 'docker push bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP}'
                     sh 'docker image rm bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP} -f'
                     sh 'kubectl apply -f service.yaml'
-                    sh 'kubectl apply -f deployment.yaml'
+                    sh 'envsubst < deployment.yaml > deployment_resolved.yaml'
+                    sh 'cat deployment_resolved.yaml'
+                    sh 'kubectl apply -f deployment_resolved.yaml'
                 }
             }
         }
