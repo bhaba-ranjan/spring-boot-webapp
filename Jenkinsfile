@@ -15,10 +15,11 @@ pipeline {
             steps {
                 script {
                     sh 'echo ${BUILD_TIMESTAMP}'
-                    sh 'docker login -u bpanigrahics -p ${DOCKER_CREDENTIALS}'
-                    sh 'docker build -t bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP} .'
-                    sh 'docker push bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP}'
-                    sh 'docker image rm bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP} -f'
+//                     sh 'docker login -u bpanigrahics -p ${DOCKER_CREDENTIALS}'
+//                     sh 'docker build -t bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP} .'
+//                     sh 'docker push bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP}'
+//                     sh 'docker image rm bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP} -f'
+                    sh 'kubectl get pods'
                 }
             }
         }
