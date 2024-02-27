@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ${BUILD_TIMESTAMP}
+  name: ${BUILD_TIMESTAMP_DEPLOYMENT}
 spec:
   replicas: 3
   selector:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: spring-container
-          image: ${IMAGE_NAME}:${BUILD_TIMESTAMP}
+          image: ${IMAGE_NAME}:${BUILD_TIMESTAMP_DEPLOYMENT}
           ports:
             - containerPort: 8080
   strategy:
