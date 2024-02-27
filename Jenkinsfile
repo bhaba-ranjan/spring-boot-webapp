@@ -19,6 +19,7 @@ pipeline {
 //                     sh 'docker build -t bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP} .'
 //                     sh 'docker push bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP}'
 //                     sh 'docker image rm bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP} -f'
+                    sh 'pwd'
                     sh 'kubectl get pods'
                 }
             }
