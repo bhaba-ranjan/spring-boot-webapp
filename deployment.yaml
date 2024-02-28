@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "${BUILD_TIMESTAMP_DEPLOYMENT}"
+  name: deploy-spring-webapp
 spec:
-  replicas: 3
+  replicas: 5
   selector:
     matchLabels:
       app: spring-app

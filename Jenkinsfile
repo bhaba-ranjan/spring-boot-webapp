@@ -14,15 +14,17 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Building Image') {
+        stage('Build and Deploy') {
             steps {
                 script {
                     sh 'echo ${IMAGE_NAME_TEST}'
                     sh 'echo ${BUILD_TIMESTAMP_DEPLOYMENT}'
+
                     sh 'docker login -u bpanigrahics -p ${DOCKER_CREDENTIALS}'
                     sh 'docker build -t bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP} .'
                     sh 'docker push bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP}'
                     sh 'docker image rm bpanigrahics/webapp-spring-boot:${BUILD_TIMESTAMP} -f'
+
                     sh 'kubectl apply -f service.yaml'
                     sh 'envsubst < deployment.yaml > deployment_resolved.yaml'
                     sh 'cat deployment_resolved.yaml'
@@ -34,11 +36,9 @@ pipeline {
 
     post {
         success {
-            // Notifying success
             echo 'Build and installation succeeded!'
         }
         failure {
-            // Notifying failure
             echo 'Build or installation failed!'
         }
     }
